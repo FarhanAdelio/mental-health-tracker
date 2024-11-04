@@ -17,18 +17,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
 
-
-
-
-
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
 
     context = {
         'name': request.user.username,
-        'class': 'PBP D',
-        'npm': '2306123456',
+        'class': 'PBP C',
+        'npm': '2306240162',
         'last_login': request.COOKIES['last_login'],
     }
     return render(request, "main.html", context)
@@ -97,14 +93,10 @@ def logout_user(request):
 
 
 def edit_mood(request, id):
-    # Get mood entry berdasarkan id
     mood = MoodEntry.objects.get(pk = id)
-
-    # Set mood entry sebagai instance dari form
     form = MoodEntryForm(request.POST or None, instance=mood)
 
     if form.is_valid() and request.method == "POST":
-        # Simpan form dan kembali ke halaman awal
         form.save()
         return HttpResponseRedirect(reverse('main:show_main'))
 
